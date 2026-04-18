@@ -1,0 +1,20 @@
+node_modules/
+dev/testing/test-results/
+dev/testing/playwright-report/
+playwright/.cache/
+playwright-report/
+
+# Documentación local (no versionar)
+docs/
+
+# Plugins / backups (no subir a GitHub)
+*.zip
+
+# Entornos y secretos locales
+.env
+.env.*
+!.env.example
+
+# Sistema
+.DS_Store
+Thumbs.db
