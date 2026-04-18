@@ -175,6 +175,21 @@ function kinetic_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'kinetic_enqueue_assets' );
 
 /**
+ * Favicon SVG (assets/favicon.svg) si no hay icono del sitio en el personalizador.
+ */
+function kinetic_theme_favicon() {
+	if ( function_exists( 'has_site_icon' ) && has_site_icon() ) {
+		return;
+	}
+	$href = get_template_directory_uri() . '/assets/favicon.svg';
+	printf(
+		'<link rel="icon" href="%s" type="image/svg+xml" sizes="any">' . "\n",
+		esc_url( $href )
+	);
+}
+add_action( 'wp_head', 'kinetic_theme_favicon', 5 );
+
+/**
  * Personalizador: textos clave de la portada
  *
  * @param WP_Customize_Manager $wp_customize Customizer.
