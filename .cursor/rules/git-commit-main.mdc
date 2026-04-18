@@ -1,0 +1,18 @@
+---
+description: Tras cambios en el tema, hacer commit y push a origin/main
+alwaysApply: true
+---
+
+# Git: commit y push en `main`
+
+Cuando completes tareas que **modifiquen archivos** del repositorio (código, estilos, plantillas, assets del tema):
+
+1. **Rama**: trabaja en `main`. Si no estás en `main`, `git checkout main` y sincroniza (`git pull --rebase origin main`) antes de seguir si hace falta.
+2. **Al cerrar la tarea**: revisa `git status`. Si hay cambios, **haz commit y push** tú mismo (no dejes solo instrucciones al usuario).
+   - `git add` de los archivos pertinentes (no añadas secretos ni `.env`).
+   - `git commit -m "mensaje claro en presente o imperativo (ES o EN coherente con el repo)"`.
+   - `git push origin main`.
+3. Si el push falla (auth, red, conflictos), **intenta resolver** (pull/rebase, credenciales) y si no es posible, explica el error concreto.
+4. Si **no hubo cambios** en archivos o el usuario pidió solo lectura/plan, no hagas commit vacío ni push innecesario.
+
+Objetivo: que **GitHub `main`** refleje siempre el estado del código al terminar el trabajo en este proyecto.
