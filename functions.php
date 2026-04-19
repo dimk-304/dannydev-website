@@ -17,7 +17,7 @@ if ( ! defined( 'KINETIC_ACF_HERO_TITLE_FIELD' ) ) {
 }
 
 require_once get_template_directory() . '/inc/language-switch.php';
-require_once get_template_directory() . '/inc/acf-portfolio-detail.php';
+require_once get_template_directory() . '/inc/portfolio-detail-meta.php';
 
 /**
  * Página desde la que leer los campos ACF del hero (misma donde editaste el grupo Home-Landing).
