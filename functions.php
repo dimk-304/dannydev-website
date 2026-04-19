@@ -20,6 +20,19 @@ require_once get_template_directory() . '/inc/language-switch.php';
 require_once get_template_directory() . '/inc/portfolio-detail-meta.php';
 
 /**
+ * Mostrar sección Journal y enlace Blog en la portada (menú principal solo en front).
+ * Por defecto false (oculto). Personalizador → Portada Kinetic, o filtro kinetic_show_landing_blog.
+ *
+ * @return bool
+ */
+function kinetic_show_landing_blog() {
+	return (bool) apply_filters(
+		'kinetic_show_landing_blog',
+		(bool) get_theme_mod( 'kinetic_show_landing_blog', false )
+	);
+}
+
+/**
  * Página desde la que leer los campos ACF del hero (misma donde editaste el grupo Home-Landing).
  *
  * @return int Post ID o 0.
@@ -295,6 +308,26 @@ function kinetic_customize_register( $wp_customize ) {
 
 		$wp_customize->add_control( $id, $control_args );
 	}
+
+	$wp_customize->add_setting(
+		'kinetic_show_landing_blog',
+		array(
+			'default'           => false,
+			'sanitize_callback' => static function ( $value ) {
+				return (bool) $value;
+			},
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'kinetic_show_landing_blog',
+		array(
+			'label'       => __( 'Mostrar Journal y Blog en la portada', 'kinetic' ),
+			'description' => __( 'Activado: se muestra la sección Journal y el enlace al blog en el menú (solo en la página de inicio). Desactivado: ambos ocultos temporalmente.', 'kinetic' ),
+			'section'     => 'kinetic_front',
+			'type'        => 'checkbox',
+		)
+	);
 }
 add_action( 'customize_register', 'kinetic_customize_register' );
 
@@ -379,6 +412,9 @@ function kinetic_fallback_menu() {
 	echo '<ul id="kinetic-nav-menu" class="kinetic-nav__list">';
 
 	foreach ( $links as $url => $label ) {
+		if ( is_front_page() && ! kinetic_show_landing_blog() && untrailingslashit( (string) $url ) === untrailingslashit( (string) $blog_url ) ) {
+			continue;
+		}
 		printf(
 			'<li class="menu-item kinetic-nav__item"><a class="kinetic-nav__link" href="%1$s">%2$s</a></li>',
 			esc_url( $url ),
@@ -388,6 +424,45 @@ function kinetic_fallback_menu() {
 
 	echo '</ul>';
 }
+
+/**
+ * Oculta el ítem del blog en el menú principal solo en la portada (si Journal está desactivado).
+ *
+ * @param WP_Post[] $items Elementos del menú.
+ * @param object    $args  Argumentos de wp_nav_menu.
+ * @return WP_Post[]
+ */
+function kinetic_nav_menu_hide_blog_on_front( $items, $args ) {
+	if ( kinetic_show_landing_blog() || ! is_front_page() ) {
+		return $items;
+	}
+	if ( empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+		return $items;
+	}
+	$blog_id  = (int) get_option( 'page_for_posts' );
+	$blog_url = $blog_id ? untrailingslashit( (string) get_permalink( $blog_id ) ) : '';
+
+	foreach ( $items as $i => $item ) {
+		if ( ! isset( $item->url ) ) {
+			continue;
+		}
+		if ( false !== strpos( (string) $item->url, '#journal' ) ) {
+			unset( $items[ $i ] );
+			continue;
+		}
+		$item_url = untrailingslashit( (string) $item->url );
+		if ( $blog_id && 'page' === $item->object && (int) $item->object_id === $blog_id ) {
+			unset( $items[ $i ] );
+			continue;
+		}
+		if ( $blog_url && $item_url === $blog_url ) {
+			unset( $items[ $i ] );
+		}
+	}
+
+	return array_values( $items );
+}
+add_filter( 'wp_nav_menu_objects', 'kinetic_nav_menu_hide_blog_on_front', 10, 2 );
 
 /**
  * Fuerza el editor clasico en todo el sitio.

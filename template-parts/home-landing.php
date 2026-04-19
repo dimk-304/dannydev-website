@@ -13,5 +13,7 @@ get_template_part( 'template-parts/front/hero' );
 get_template_part( 'template-parts/front/experience' );
 get_template_part( 'template-parts/front/tech-logos' );
 get_template_part( 'template-parts/front/portfolio' );
-get_template_part( 'template-parts/front/journal' );
+if ( kinetic_show_landing_blog() ) {
+	get_template_part( 'template-parts/front/journal' );
+}
 get_template_part( 'template-parts/front/contact' );

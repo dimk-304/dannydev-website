@@ -167,6 +167,8 @@ function kinetic_get_spanish_strings() {
 		'© 2024 OBSIDIAN KINETIC. ALL RIGHTS RESERVED.'                                  => '© 2024 OBSIDIAN KINETIC. TODOS LOS DERECHOS RESERVADOS.',
 		'© 2026 Danny Cen · Mérida, Yucatán, Mexico'                                     => '© 2026 Danny Cen · Mérida, Yucatán, México',
 		'Pie: texto legal'                                                               => 'Pie: texto legal',
+		'Mostrar Journal y Blog en la portada'                                           => 'Mostrar Journal y Blog en la portada',
+		'Activado: se muestra la sección Journal y el enlace al blog en el menú (solo en la página de inicio). Desactivado: ambos ocultos temporalmente.' => 'Activado: se muestra la sección Journal y el enlace al blog en el menú (solo en la página de inicio). Desactivado: ambos ocultos temporalmente.',
 		'Home'                                                                           => 'Inicio',
 		'CV'                                                                             => 'CV',
 		'Projects'                                                                       => 'Proyectos',
