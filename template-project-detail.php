@@ -21,8 +21,8 @@ while ( have_posts() ) :
 
 	$tag_project   = kinetic_pf_field( 'tag-project', get_the_title() );
 	$reading_time  = kinetic_pf_field( 'reading-time', '12 MIN READ' );
-	$title_main    = kinetic_pf_field( 'title-project', 'Entanglement & The ' );
-	$title_accent  = kinetic_pf_field( 'title-project-accent', 'Future of Neural Architecture' );
+	$title_main   = kinetic_pf_field( 'title-project', 'Entanglement & The ' );
+	$title_accent = kinetic_pf_field( 'title-project-accent', 'Future of Neural Architecture', false );
 	$editor_avatar = kinetic_pf_img_url( 'editor-avatar', $default_avatar );
 	$editor_name   = kinetic_pf_field( 'editor-name', 'Dr. Elias Thorne' );
 	$position      = kinetic_pf_field( 'position', 'Lead Architect @ Obsidian Lab' );

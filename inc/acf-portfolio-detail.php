@@ -12,16 +12,20 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Valor de campo ACF o valor por defecto.
  *
- * @param string $name    Field Name en ACF.
- * @param string $default Valor si el campo está vacío.
+ * @param string $name                 Field Name en ACF.
+ * @param string $default              Valor si el campo no está definido.
+ * @param bool   $empty_string_default Si es false, una cadena vacía guardada en ACF se respeta (no se sustituye por $default).
  * @return string
  */
-function kinetic_pf_field( $name, $default = '' ) {
+function kinetic_pf_field( $name, $default = '', $empty_string_default = true ) {
 	if ( ! function_exists( 'get_field' ) ) {
 		return $default;
 	}
 	$v = get_field( $name );
-	if ( null === $v || false === $v || '' === $v ) {
+	if ( null === $v || false === $v ) {
+		return $default;
+	}
+	if ( $empty_string_default && '' === $v ) {
 		return $default;
 	}
 	if ( is_string( $v ) ) {
