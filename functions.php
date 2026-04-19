@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'KINETIC_VERSION', '1.0.24' );
+define( 'KINETIC_VERSION', '1.0.23' );
 
 /**
  * Field Name del campo ACF “Title Hero - Landing CV” (WYSIWYG) — debe coincidir con el Name en ACF (mayúsculas/minúsculas).
@@ -17,7 +17,6 @@ if ( ! defined( 'KINETIC_ACF_HERO_TITLE_FIELD' ) ) {
 }
 
 require_once get_template_directory() . '/inc/language-switch.php';
-require_once get_template_directory() . '/inc/seed-yiikaan-post.php';
 
 /**
  * Página desde la que leer los campos ACF del hero (misma donde editaste el grupo Home-Landing).
@@ -151,8 +150,8 @@ function kinetic_enqueue_assets() {
 	);
 
 	wp_enqueue_style(
-		'kinetic-theme',
-		get_stylesheet_uri(),
+		'kinetic-main',
+		get_template_directory_uri() . '/assets/css/main.css',
 		array( 'kinetic-fonts', 'kinetic-material-symbols' ),
 		$ver
 	);
