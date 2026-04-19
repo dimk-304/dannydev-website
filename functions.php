@@ -49,7 +49,7 @@ function kinetic_get_landing_hero_post_id() {
  * @return string Cadena vacía si no hay valor.
  */
 function kinetic_get_acf_hero_title_raw( $post_id ) {
-	if ( ! function_exists( 'get_field' ) || ! $post_id ) {
+	if ( ! $post_id ) {
 		return '';
 	}
 	$default_names = array(
@@ -62,7 +62,11 @@ function kinetic_get_acf_hero_title_raw( $post_id ) {
 	$names = apply_filters( 'kinetic_acf_hero_title_field_names', $default_names );
 	$names = array_unique( array_filter( array_map( 'strval', (array) $names ) ) );
 	foreach ( $names as $name ) {
-		$raw = get_field( $name, $post_id, false );
+		if ( function_exists( 'get_field' ) ) {
+			$raw = get_field( $name, $post_id, false );
+		} else {
+			$raw = get_post_meta( (int) $post_id, $name, true );
+		}
 		if ( is_string( $raw ) ) {
 			$raw = trim( $raw );
 			if ( '' !== $raw ) {
